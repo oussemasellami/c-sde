@@ -64,4 +64,73 @@ return 'err'
         }
        
     }
+
+
+      async getbyrole(role:string):Promise<User[] >{
+           try{
+            const user=await this.userRepository.find(
+                {select:
+                    ["username","role"]
+                     ,where:{"role":role}      
+                }
+            )
+             return user
+        }catch(err){
+return []
+        }
+        
+    }
+
+
+          async getbydomain(domain:string):Promise<User[] >{
+           try{
+            const user=await this.userRepository.find({
+               
+                     where:{
+                        email:{
+                        $regex:`@${domain}$`
+                     }}      
+                }
+            )
+             return user
+        }catch(err){
+return []
+        }
+        
+    }
+
+
+    
+          async getsixmois():Promise<User[] >{
+           try{
+            const sixmois=new Date()
+            sixmois.setMonth(sixmois.getMonth()-6)
+            const user=await this.userRepository.find(
+                {updatedAt:{$exists:true} ,  $expr:
+                        {$lt:[{$toDate:"$updatedAt"},sixmois]}     
+                }
+
+            )
+             return user
+        }catch(err){
+return []
+        }  
+    }
+
+
+              async getdays():Promise<User[] >{
+           try{
+            const days=new Date()
+            days.setDate(days.getDate()-7)
+            const user=await this.userRepository.find(
+                {updatedAt:{$exists:true} ,  $expr:
+                        {$gt:[{$toDate:"$updatedAt"},days]}     
+                }
+
+            )
+             return user
+        }catch(err){
+return []
+        }  
+    }
 }

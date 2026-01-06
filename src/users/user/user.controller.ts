@@ -5,7 +5,7 @@ import { ObjectId } from 'typeorm';
 import { createuserdto } from './creteuser.dto';
 import { FilterbyroleInterceptor } from 'src/filterbyrole/filterbyrole.interceptor';
 
-@UseInterceptors(FilterbyroleInterceptor)
+//@UseInterceptors(FilterbyroleInterceptor)
 @Controller('user')
 export class UserController {
 constructor(private readonly userService:UserService){}
@@ -18,6 +18,20 @@ createuser(@Body() data:createuserdto){
 @Get("showuser")
 getalluser(){
     return this.userService.getallusers()
+   
+}
+
+@Get("getdatesixMonth")
+getdatesixMonth(){
+    //return this.userService.getsixmois()
+     return this.userService.getdays()
+   
+}
+
+
+@Get("showuserbyrole/:role")
+getbyrole(@Param("role") role:string){
+    return this.userService.getbyrole(role)
 }
 
 @Get("showuser/:id")
