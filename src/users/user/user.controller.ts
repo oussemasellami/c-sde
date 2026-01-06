@@ -2,13 +2,14 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { ObjectId } from 'typeorm';
+import { createuserdto } from './creteuser.dto';
 
 @Controller('user')
 export class UserController {
 constructor(private readonly userService:UserService){}
 
 @Post("add")
-createuser(@Body() data:User){
+createuser(@Body() data:createuserdto){
     return this.userService.create(data)
 }
 
