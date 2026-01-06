@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { ObjectId } from 'typeorm';
 import { createuserdto } from './creteuser.dto';
+import { FilterbyroleInterceptor } from 'src/filterbyrole/filterbyrole.interceptor';
 
+@UseInterceptors(FilterbyroleInterceptor)
 @Controller('user')
 export class UserController {
 constructor(private readonly userService:UserService){}

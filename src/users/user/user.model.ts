@@ -16,4 +16,7 @@ export class User{
     
     @Column()
     status:string
+
+    @Column()
+    role:string
 }
