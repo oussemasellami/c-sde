@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Chat en temps réel</title>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #messages div { margin: 5px 0; padding: 8px; background: #eee; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Chat NestJS</h2>
+  <div id="messages"></div>
+  <input id="content" placeholder="Votre message" />
+  <button id="send">Envoyer</button>
+</body>
+
+<script>
+ const socket=io('http://localhost:3000/')
+
+ const nameuser=prompt('votre nom :')
+
+socket.on('messagerecu',(data)=>{
+    console.log('message client :',data)
+    const div=document.getElementById('messages')
+    const msg =document.createElement('div')
+    msg.innerText=`${data.nameuser} : ${data.msg}`
+    div.appendChild(msg)
+
+})
+
+document.getElementById('send').addEventListener('click',()=>{
+    msg=document.getElementById('content').value
+    socket.emit('msgsend',{msg,nameuser})
+})
+
+</script>
+</html>
+
